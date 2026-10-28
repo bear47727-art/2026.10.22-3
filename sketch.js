@@ -1,11 +1,11 @@
 const QUIZ_SIZE = 6; // 每回合抽取的題目數量。
-const QUESTION_BANK_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQDceEa99jE5ttBAZMfB8DGpKyAJg12kRkLiJ10X6ALV1UJM0tdXQLckszhtorWk50x60xZB5unFMWu/pub?output=csv"; // Google 試算表發布的 CSV 題庫網址。
+const QUESTION_CSV_URL = "https://docs.google.com/spreadsheets/d/1GUmGWf6KNwWN5cThoI2l97AqlW1KaGLOQSw8JWZHaE4/gviz/tq?tqx=out:csv&gid=0"; // Google 試算表的 CSV 匯出網址。
 let questionBank = []; // 從 CSV 載入的完整題庫。
 let quizItems = []; // 本回合抽出的題目。
 
 // 頁面初始化前載入 CSV 題庫。
 function preload() {
-  loadTable(QUESTION_BANK_URL, "csv", "header", (table) => {
+  loadTable(QUESTION_CSV_URL, "csv", "header", (table) => {
     questionBank = table.getRows().map((row) => ({
       prompt: row.getString("prompt"),
       answer: row.getString("answer"),
@@ -13,7 +13,7 @@ function preload() {
       color: row.getString("color")
     }));
   }, (error) => {
-    console.error("無法載入 Google 試算表 CSV 題庫，請確認發布網址有效且題庫可公開讀取。", error);
+    console.error("無法載入 Google 試算表 CSV，請確認試算表允許檢視且題庫格式正確。", error);
   });
 } // 結束題庫載入。
 
